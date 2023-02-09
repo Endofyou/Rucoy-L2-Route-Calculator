@@ -22,6 +22,7 @@
   <p><button type='button' onclick='Calulation()'>Calculate</button></p>
 
   <p id='results' style='font-size:140%'>[Shortest route will display here]</p>
+  <p id='results2' style='font-size:140%'></p>
 
   <script>
     function Calulation() {
@@ -121,7 +122,8 @@
         }
       }
 
-      document.getElementById('results').innerHTML = route
+      document.getElementById('results').innerHTML = 'Total steps: ' + route.length
+      document.getElementById('results2').innerHTML = route
     }
   </script>
 
