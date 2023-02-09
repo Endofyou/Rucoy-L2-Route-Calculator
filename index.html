@@ -1,0 +1,130 @@
+<html style='background-color: #35363A'>
+
+<head>
+  <title>L2 route Calculator</title>
+</head>
+
+<body style='color: #FFFFFF;text-align: center;font-family: Consolas'>
+
+  <h1>
+    L2 route Calculator
+  </h1>
+
+  <p style='font-size:130%'>
+    Input into the following boxes your starting room and the target room respectively.
+  </p>
+
+  <div style='font-size:110%'>
+    <p>Starting Room: <input type='text' id='textBox1' value='' /></p>
+    <p>Target Room: <input type='text' id='textBox2' value='' /></p>
+  </div>
+
+  <p><button type='button' onclick='Calulation()'>Calculate</button></p>
+
+  <p id='results' style='font-size:140%'>[Shortest route will display here]</p>
+
+  <script>
+    function Calulation() {
+      const start = document.getElementById('textBox1').value
+      const target = document.getElementById('textBox2').value
+      
+      if (
+        start > 0 == false ||
+        start < 26 == false ||
+        target > 0 == false ||
+        target < 26 == false
+      ) {
+        document.getElementById('results').innerHTML = 'ERROR: Numbers must be between 1 and 25'
+        return
+      }
+      
+      let roomNo = [
+        [16, 8 ],// room 1
+        [17, 13],// room 2
+        [6 , 13],// room 3
+        [7 , 23],// room 4
+        [11, 6 ],// room 5
+        [9 , 7 ],// room 6
+        [9 , 6 ],// room 7
+        [19, 22],// room 8
+        [7 , 21],// room 9
+        [22, 24],// room 10
+        [20, 7 ],// room 11
+        [7 , 18],// room 12
+        [16, 12],// room 13
+        [21, 15],// room 14
+        [1 , 22],// room 15
+        [15, 10],// room 16
+        [15, 22],// room 17
+        [9 , 4 ],// room 18
+        [25, 17],// room 19
+        [9 , 3 ],// room 20
+        [5 , 12],// room 21
+        [15, 17],// room 22
+        [1 , 9 ],// room 23
+        [14, 17],// room 24
+        [2 , 25],// room 25
+      ]
+
+      let count = 1
+      let guesses = [start]
+      let buffer = []
+
+      loop1: while (count < 25) {
+        for (let i = 0; i < guesses.length; i++) {
+          if (roomNo[guesses[i] - 1][0] != target) {
+            buffer.push(roomNo[guesses[i] - 1][0])
+          } else {
+            break loop1
+          }
+          if (roomNo[guesses[i] - 1][1] != target) {
+            buffer.push(roomNo[guesses[i] - 1][1])
+          } else {
+            break loop1
+          }
+        }
+        guesses = buffer
+        buffer = []
+        count++
+      }
+      
+      let route = []
+      for (let i = 0; i < count; i++) {
+        route.push(0)
+      }
+
+      loop2: for (let i = 0; i < 2 ** route.length; i++) {
+        let path = [start - 1]
+        for (let j = 0; j < route.length; j++) {
+          path.push(roomNo[path[j]][route[j]] - 1)
+        }
+        if (path[route.length] + 1 == target) {
+          break loop2
+        } else {
+          loop3: for (let j = route.length - 1; j >= 0; j--) {
+            if (route[j] == 0) {
+              route[j] = 1
+              for (let k = j; k < route.length - 1; k++) {
+                route[k + 1] = 0
+              }
+              break loop3
+            }
+          }
+        }
+      }
+
+      for (let i = 0; i < route.length; i++) {
+        if (route[i] == 0) {
+          route[i] = ' L'
+        } else {
+          route[i] = ' R'
+        }
+      }
+
+      document.getElementById('results').innerHTML = route
+    }
+  </script>
+
+</body>
+
+</html>
