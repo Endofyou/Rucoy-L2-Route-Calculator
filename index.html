@@ -114,17 +114,23 @@
           }
         }
       }
-
+      
+      let directions = ['']
+      let groupNo = 0
       for (let i = 0; i < route.length; i++) {
         if (route[i] == 0) {
-          route[i] = ' L'
+          directions[groupNo] += 'L'
         } else {
-          route[i] = ' R'
+          directions[groupNo] += 'R'
+        }
+        if (route[i] != route[i + 1]) {
+          groupNo++
+          directions[groupNo] = ' '
         }
       }
-
+      
       document.getElementById('results').innerHTML = 'Total steps: ' + route.length
-      document.getElementById('results2').innerHTML = route
+      document.getElementById('results2').innerHTML = directions
     }
   </script>
 
