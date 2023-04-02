@@ -123,7 +123,7 @@
         } else {
           directions[groupNo] += 'R'
         }
-        if (route[i] != route[i + 1]) {
+        if ((route[i] != route[i + 1]) && (route.length > i + 1)) {
           groupNo++
           directions[groupNo] = ' '
         }
