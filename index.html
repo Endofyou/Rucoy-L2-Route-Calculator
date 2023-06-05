@@ -33,9 +33,11 @@
         start > 0 == false ||
         start < 26 == false ||
         target > 0 == false ||
-        target < 26 == false
+        target < 26 == false ||
+        start != Math.round(start) ||
+        target != Math.round(target)
       ) {
-        document.getElementById('results').innerHTML = 'ERROR: Input must be numbers ranging from 1 to 25'
+        document.getElementById('results').innerHTML = 'ERROR: Input must be integers ranging from 1 to 25'
         document.getElementById('results2').innerHTML = ''
         return
       }
